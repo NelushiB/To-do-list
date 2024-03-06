@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+}
+
+.content {
+    padding: 5rem 8rem;
+}
+
+.contenitor,
+.input,
+.input-task,
+input[type="text"],
+table {
+    width: 100%;
+}
+
+.contenitor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    margin-bottom: 4rem;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    font-size: 35px;
+    font-weight: 900;
+}
+
+.input {
+    display: flex;
+    margin: 2rem 0 8rem;
+}
+
+.input-task{
+    margin-right: 0.8rem;
+}
+
+button.add {
+    padding: 8px 16px;
+    border: solid 1px #43a52a;
+    border-radius: 5px;
+    background: #43a52a;
+    transition: .3s;
+    cursor: pointer;
+    color: #fff;
+}
+
+button.add:hover {
+    background: transparent;
+    color: #212121;
+}
+
+input[type="text"] {
+    padding: 8px 16px;
+    border-radius: 5px;
+    border: solid 1px #ccc ;
+}
+
+th:first-child {
+    text-align: left;
+}
+
+th,
+td {
+    padding: 1rem 0;
+    border-bottom: 1px solid #ccc;
+}
+
+th {
+    font-size: 18px;
+}
+
+td:not(td:first-child) {
+    text-align: center;
+}
+
+td.status span {
+    padding: 6px 15px;
+    border-radius: 15px;
+    color: #fff;
+    background: #dd6969;
+    font-size: 15px;
+    font-weight: 300;
+}
+
+.button-group button {
+    padding: 6px 12px;
+    margin: 0 3px;
+    border-radius: 5px;
+    transition: .3s;
+    cursor: pointer;
+    background: transparent;
+}
+
+button.edit {
+    color: #fff;
+    border: solid 1px #4545b1;
+    background: #4545b1;
+}
+
+button.edit:hover {
+    background: transparent;
+    color: #212121;
+}
+
+button.delete {
+    border: solid 1px #9c392a;
+}
+
+button.delete:hover {
+    background: #9c392a;
+    color: #fff;
+}
+
+
