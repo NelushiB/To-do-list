@@ -3,8 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
    let inputText = document.querySelector('#task');
    let addButton = document.querySelector('.add');
    let listTasks = document.querySelector('tbody');
-   let editButton = document.querySelector('button.edit');
-   let deleteButton = document.querySelector('button.delete')
+   let editButtons = document.querySelectorAll('button.edit');
+   let deleteButtons = document.querySelectorAll('button.delete')
 
 
    addButton.addEventListener("click", (e) => {
@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (taskName.trim() != '') {
          let lineTask = document.createElement('tr');
+
          lineTask.innerHTML =
          `<td><input type="checkbox" name="" id=""> ${taskName}</td>
          <td class="status"><span>Not started</span></td>
@@ -23,6 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
          </td>`;
          listTasks.appendChild(lineTask);
+
+         //saveData();
          inputText.value = '';
       } else {
          alert('The field is empty!')
@@ -31,21 +34,41 @@ document.addEventListener("DOMContentLoaded", () => {
    });
 
    // Edit Button con prompt
+   editButtons.forEach(editButton => {
+      editButton.addEventListener("click", (e) => {
+         let target = e.target;
 
+         if (target.localName == "button" || target.localName == "i") {
+            let editTask = prompt();
+         }
+      });
+   });
 
    // Delete Button
-   deleteButton.addEventListener("click", (e) => {
-      let target = e.target;
-      if (target.localname == "button" || target.localname == "i") {
-         let lineTR = e.target.closest("tr");
-         lineTR.remove();
-      }
+   deleteButtons.forEach(deleteButton => {
+      deleteButton.addEventListener("click", (e) => {
+         let target = e.target;
+
+         if (target.localName == "button" || target.localName == "i") {
+            let lineTR = e.target.closest("tr");
+            lineTR.remove();
+            //saveData();
+         }
+      });
    });
 
    // Status
 
    // Local Storage
-   
+   /* function saveData() {
+      localStorage.setItem("task", listTasks.innerHTML);
+   }
+
+   function getData() {
+      listTasks.innerHTML = localStorage.getItem("task");
+   }
+
+   getData();*/
 
 
    // LightMode & DarkMode
