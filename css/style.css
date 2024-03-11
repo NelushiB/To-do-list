@@ -10,6 +10,14 @@ body {
    font-family: "Roboto", sans-serif;
 }
 
+.hidden {
+   display: none;
+}
+
+.show {
+   display: block;
+}
+
 .content {
    padding: 5rem 8rem;
 }
@@ -26,6 +34,7 @@ table {
    display: flex;
    flex-direction: column;
    align-items: center;
+   position: relative;
 }
 
 h1 {
@@ -45,7 +54,8 @@ h1 {
    margin-right: 0.8rem;
 }
 
-button.add {
+button.add,
+button.confirm {
    padding: 8px 16px;
    border: solid 1px #43a52a;
    border-radius: 5px;
@@ -55,7 +65,8 @@ button.add {
    color: #fff;
 }
 
-button.add:hover {
+button.add:hover,
+button.confirm:hover {
    background: transparent;
    color: #212121;
 }
@@ -121,3 +132,54 @@ button.delete:hover {
    background: #9c392a;
    color: #fff;
 }
+
+.edit-window {
+   padding: 2rem;
+   position: absolute;
+   width: 50%;
+   top: 50%;
+   z-index: 9;
+   background: #fff;
+   border-radius: 5px;
+   box-shadow: 13px 13px 14px 0px rgba(0,0,0,0.1),10px 10px 15px -3px rgba(0,0,0,0.1);
+}
+
+form.edit-form {
+   display: flex;
+   flex-direction: column;
+   position: relative;
+}
+
+span .fa-xmark {
+   position: absolute;
+   right: 0;
+   top: 0;
+   cursor: pointer;
+   transition: .3s;
+}
+
+span .fa-xmark:hover {
+   color: #9c392a;
+}
+
+.edit-form h3 {
+   text-align: center;
+   margin: 1rem 0 3.5rem;
+}
+
+.edit-form .box {
+   display: flex;
+   margin-bottom: 2rem;
+}
+
+.box select {
+   margin-left: 0.8rem;
+   border-radius: 5px;
+   border: solid 1px #ccc;
+   padding: 0 0.2rem;
+}
+
+.edit-form button {
+   margin: 2rem 0;
+}
+

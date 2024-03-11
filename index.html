@@ -32,38 +32,23 @@
                </tr>
             </thead>
             <tbody>
-               <tr>
-                  <td><input type="checkbox" name="" id=""> Andare a correre</td>
-                  <td class="status"><span>Not started</span></td>
-                  <td>
-                     <div class="button-group">
-                        <button class="edit"><i class="fa-regular fa-pen-to-square"></i></button>
-                        <button class="delete"><i class="fa-regular fa-trash-can"></i></button>
-                     </div>
-                  </td>
-               </tr>
-               <tr>
-                  <td><input type="checkbox" name="" id=""> Studiare Javascript</td>
-                  <td class="status"><span>Not started</span></td>
-                  <td>
-                     <div class="button-group">
-                        <button class="edit"><i class="fa-regular fa-pen-to-square"></i></button>
-                        <button class="delete"><i class="fa-regular fa-trash-can"></i></button>
-                     </div>
-                  </td>
-               </tr>
-               <tr>
-                  <td><input type="checkbox" name="" id=""> Pulire la stanza</td>
-                  <td class="status"><span>Not started</span></td>
-                  <td>
-                     <div class="button-group">
-                        <button class="edit"><i class="fa-regular fa-pen-to-square"></i></button>
-                        <button class="delete"><i class="fa-regular fa-trash-can"></i></button>
-                     </div>
-                  </td>
-               </tr>
             </tbody>
          </table>
+         <div class="edit-window hidden">
+            <form action="#" method="get" class="edit-form">
+               <h3>Edit task</h3>
+               <span><i class="fa-solid fa-xmark"></i></span>
+               <div class="box">
+                  <input type="text" name="task">
+                  <select name="status" id="status">
+                     <option value="not-started">Not started</option>
+                     <option value="in-progress">In progress</option>
+                     <option value="completed">Completed</option>
+                  </select>
+               </div>
+               <button type="submit" class="confirm">Conferma</button>
+            </form>
+         </div>
       </div>
    </div>
 
