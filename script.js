@@ -1,179 +1,132 @@
-class ToDoList {
-   constructor() {
-      this.tasks = [];
-      this.id = 0
-      console.log("Lista Tasks: ", this.tasks );
-   }
+document.addEventListener("DOMContentLoaded", () => {
 
-   addTask(task) {
-      const newTask = {
-         id: this.id,
-         name: task,
-         status: 'Not started'
-      }
-      this.tasks.push(newTask);
-      this.createNewTask(newTask.id, newTask.name, newTask.status);   
-      this.id++
-   }
+   // Task Model
+   let tasks = [];
+   console.log("Lista Tasks: ", tasks);
 
-   createNewTask(id, task, status) {
-      // Create a new task 
-      let listTasks = document.querySelector('tbody');
-      let lineTask = document.createElement('tr');
-      lineTask.dataset.id = id;
-      lineTask.innerHTML =
-         `<td><input type="checkbox" name="" id=""> ${task}</td>
-         <td class="status"><span>${status}</span></td>
+   // Dom Elements
+   let listTasks = document.querySelector("tbody");
+   let form = document.querySelector(".form");
+   let task = document.querySelector("#task");
+
+   function createNewTask(task) {
+      // Create a new task
+      let lineTask = document.createElement("tr");
+
+      lineTask.innerHTML = `
+         <td>
+            <input type="checkbox" name="" id="">
+            <input type="text" name="task" value="${task}" class="task" readonly>
+         </td>
+         <td class="status"><span>Not started</span></td>
          <td>
             <div class="button-group">
                <button class="edit"><i class="fa-regular fa-pen-to-square"></i></button>
                <button class="delete"><i class="fa-regular fa-trash-can"></i></button>
             </div>
          </td>`;
-      
+
       listTasks.appendChild(lineTask);
    }
 
-   deleteTask(id) {
-      const index = this.tasks.findIndex(task => task.id == id);
-      if(index != -1) {
-         this.tasks.splice(index, 1);
-      }
-   }
+   tasks.forEach(el => createNewTask(el.name));
 
-   editTask(id, editTask, editStatus) {
-      const index = this.tasks.findIndex(task => task.id == id);
-      console.log("edit-index", index);
-      if(index != -1) {
-         this.tasks[index] = {
-            name: editTask,
-            status: editStatus
-         }
-      }
-      
-   }
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-
-   let listTasks = document.querySelector('tbody');
-   let inputText = document.querySelector('#task');
-   let addButton = document.querySelector('.add');
-   let editWindow = document.querySelector('.edit-window');
-   let close = editWindow.querySelector('span');
-   let confirmButton = editWindow.querySelector ('button.confirm');
-   let inputEdit = editWindow.querySelector('input');
-   let status = editWindow.querySelector('option').textContent;
-   let selectStatus = editWindow.querySelector('#status').options;
-
-   const singleTask = new ToDoList();
-
-   addButton.addEventListener("click", (e) => {
-      let taskName = inputText.value;
+   form.addEventListener("submit", (e) => {
       e.preventDefault();
-      if (taskName.trim() != '') {
-         singleTask.addTask(taskName);
-         //saveData();
-         inputText.value = '';
+
+      if (task.value.trim()) {
+         createNewTask(task.value.trim());
+
+         tasks.push({
+            name: task.value.trim(),
+            status: "Not started"
+         });
+
+         task.value = "";
       } else {
-         alert('The field is empty!')
+         alert("The field is empty!");
       }
    });
 
    listTasks.addEventListener("click", (e) => {
-      const target = e.target;
+      let target = e.target;
+      let trTask = target.closest("tr");
+      let index = [...listTasks.children].findIndex(el => el === trTask);
+      let editButton = trTask.querySelector("button.edit");
+      let editTask = trTask.querySelector(".task");
+      let editStatus = trTask.querySelector(".status span");
+
+      // Create a select input 
+      let selectInput = document.createElement("select");
+      let options = ["Not started", "In progress", "Completed"];
 
       // Delete the selected task
-      if(target.className == "delete" || target.className == "fa-regular fa-trash-can") {
-         let trTask = target.closest('tr');
-         let id = trTask.dataset.id;
-         console.log(id);
+      if (target.classList.contains("delete") || target.classList.contains("fa-trash-can")) {
+
+         // Delete element from array
+         tasks.splice(index, 1);
+
+         // Delete element from DOM
          trTask.remove();
-         singleTask.deleteTask(id);
 
-      // Edit the selected task
-      } else if (target.className == "edit" || target.className == "fa-regular fa-pen-to-square") {
-         addRemoveClass();
+      } else if (target.classList.contains("edit") || target.classList.contains("fa-pen-to-square")) {
 
-         let tdTasks = document.querySelectorAll('tr td:first-child')
-         console.log(tdTasks)
-         
-         tdTasks.forEach(tdTask => {
-            // Getting the task name
-            inputEdit.value = tdTask.textContent;
+         // Change the edit button in save button
+         editButton.innerHTML = `<i class="fa-regular fa-floppy-disk"></i>`;
+         editButton.classList.remove("edit");
+         editButton.classList.add("save");
 
-            // Getting the value of the status
-            for (let i = 0; i < selectStatus.length; i++) {
-               if (selectStatus[i].textContent === status) {
-                  selectStatus[i].selected = true;
-                  break; 
-               }
+         editTask.removeAttribute('readonly');
+         editTask.style.border = "solid #a780d3 1px";
+
+         options.forEach(option => {
+            let optionElement = document.createElement("option");
+            optionElement.textContent = option;
+            optionElement.value = option;
+   
+            if (option === editStatus.textContent) {
+               optionElement.selected = true;
             }
+            selectInput.appendChild(optionElement);
+         });
 
-            confirmButton.addEventListener("click", (e) => {
-               e.preventDefault();
-               
-               let idInput = tdTask.cellIndex;
-               let editTask = inputEdit.value;
-               let selectedStatus = status.value;
-         
-               singleTask.editTask(idInput, editTask, selectedStatus);
+         editStatus.innerHTML = "";
+         editStatus.appendChild(selectInput);
+         editStatus.style.background = "transparent";
 
-               inputEdit.textContent = editTask;
-         
-               addRemoveClass();
-               /*switch(singleTask.status.value) {
-                  case "not-started":
-                     singleTask.status.style.color = '#9c392a'
-                     break;
-                  case "in-progress":
-                     singleTask.status.style.color = 'yellow'
-                     break;
-                  default:
-                     singleTask.status.style.color = 'green'
-               } */
-               })
 
-         })
-         
+      } else if(target.classList.contains("save") || target.classList.contains("fa-floppy-disk")) {
 
+         let saveButton = trTask.querySelector("button.save");
+         let selectValue = trTask.querySelector("select").value;
+
+         // Change status
+         editStatus.innerHTML = selectValue;
+         tasks[index].status = editStatus.textContent;
          
+         switch (editStatus.textContent) {
+            case "Not started":
+               editStatus.style.background = '#dd6969'
+               break;
+            case "In progress":
+               editStatus.style.background = '#f0b067'
+               break;
+            default:
+               editStatus.style.background = '#359752'
+         }
+
+         // Change task name
+         tasks[index].name = editTask.value;
+         editTask.style.border = "none";
+         editTask.readOnly = true;
+
+         // Change button from save to edit
+         saveButton.innerHTML = `<i class="fa-regular fa-pen-to-square"></i>`;
+         saveButton.classList.remove("save");
+         saveButton.classList.add("edit")
+
+         console.log(tasks)
       } 
    });
+});
 
-   close.addEventListener("click", () => {
-      addRemoveClass();
-   });
-
-   
-
-      function addRemoveClass() {
-         if(editWindow.classList.contains('show')) {
-            editWindow.classList.remove('show');
-            editWindow.classList.add('hidden');
-         } else {
-            editWindow.classList.remove('hidden');
-            editWindow.classList.add('show');
-         }
-      }
-   }); 
-
-
-
-
-
-   // Status
-
-   // Local Storage
-   /* function saveData() {
-      localStorage.setItem("task", listTasks.innerHTML);
-   }
-
-   function getData() {
-      listTasks.innerHTML = localStorage.getItem("task");
-   }
-
-   getData();*/
-
-
-   // LightMode & DarkMode

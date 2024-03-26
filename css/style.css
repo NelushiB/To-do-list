@@ -77,18 +77,37 @@ input[type="text"] {
    border: solid 1px #ccc;
 }
 
+table {
+   border-collapse: collapse;
+}
+
 th:first-child {
    text-align: left;
 }
 
 th,
 td {
-   padding: 1rem 0;
    border-bottom: 1px solid #ccc;
+   padding: 20px 0;
 }
 
 th {
    font-size: 18px;
+}
+
+td:first-child {
+   display: flex;
+}
+
+td:first-child input[type="text"] {
+   border: none;
+   font-size: 16px;
+   margin-left: 0.4rem;
+   cursor: auto;
+}
+
+td:first-child input[type="text"]:focus {
+   outline: none;
 }
 
 td:not(td:first-child) {
@@ -104,6 +123,15 @@ td.status span {
    font-weight: 300;
 }
 
+td.status span select {
+   padding: 6px 15px;
+   border-radius: 15px;
+   font-size: 15px;
+   color: #000;
+   border: 1px solid #a780d3;
+   background: transparent;
+}
+
 .button-group button {
    padding: 6px 12px;
    margin: 0 3px;
@@ -113,13 +141,23 @@ td.status span {
    background: transparent;
 }
 
-button.edit {
+button.edit,
+button.save {
    color: #fff;
+}
+
+button.edit {
    border: solid 1px #4545b1;
    background: #4545b1;
 }
 
-button.edit:hover {
+button.save {
+   border: solid 1px #45b165;
+   background: #45b165;
+}
+
+button.edit:hover,
+button.save:hover {
    background: transparent;
    color: #212121;
 }
